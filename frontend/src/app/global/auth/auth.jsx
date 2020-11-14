@@ -8,8 +8,12 @@ const Auth = (info = { isOpen: false, setIsOpen: () => { } }) => {
     const [authName, setAuthName] = useState("");
 
     const auth = async () => {
-        await fetch(url + "/api/user/new?name=" + authName, {
-            method: "POST"
+        await fetch(url + "/api/user/new", {
+            method: "POST",
+            body: JSON.stringify({
+                nickname: authName,
+                tableId: 0
+            })
         });
         info.setIsOpen(false);
     }

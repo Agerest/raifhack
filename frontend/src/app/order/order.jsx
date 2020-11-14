@@ -2,11 +2,18 @@ import { Container, Row, Col, Card, Button, CardHeader, CardTitle } from "reacts
 import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 
 const Order = () => {
-    const paymentPage = new PaymentPageSdk('000001680200002-80200002', {
-        url: 'https://test.ecom.raiffeisen.ru/pay'
-    }); 
-    const pay = () => {
-        paymentPage.openWindow({amount: 10.10});
+
+    const pay = async () => {
+        let unpaidResponse = await fetch("/api/order/list/unpaid");
+        let unpaid = await unpaidResponse.json();
+
+        if (!unpaid.length) {
+            const paymentPage = new PaymentPageSdk('000001680200002-80200002', {
+                url: 'https://test.ecom.raiffeisen.ru/pay'
+            });
+
+            paymentPage.openWindow({ amount: 10.10 });
+        }
     }
 
     return (

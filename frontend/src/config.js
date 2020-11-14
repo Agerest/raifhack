@@ -1,1 +1,1 @@
-export const WebApiUrl = "localhost:8080"
+export const WebApiUrl = "localhost"

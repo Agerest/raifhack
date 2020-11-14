@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Container, Row, Col, Collapse, Card, CardBody, ListGroup, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledButtonDropdown } from "reactstrap";
+import { Container, Row } from "reactstrap";
+import { WebApiUrl } from '../../config';
 import TableItem from './tableItem';
 
 const Table = () => {
+    const url = WebApiUrl;
     const [tableItems, setTableItems] = useState([]);
 
     useEffect(() => {
-        const load = () => {
+        const load = async () => {
+            let getUsersResponse = await fetch(url + "/api/user/get");
 
+            if (getUsersResponse.ok) {
+                let usersReponse = await getUsersResponse.json();
+                setTableItems(usersReponse);
+            }
         };
         load();
     }, []);
@@ -16,7 +23,8 @@ const Table = () => {
         <Container className="mt-3">
             <Row>
                 {tableItems.map((item, index) =>
-                    <TableItem 
+                    <TableItem
+                        key={index}
                         name={item.name}
                         orders={item.orders}
                         totalPrice={item.totalPrice}

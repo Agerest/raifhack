@@ -1,7 +1,8 @@
 const pageNames = {
     table: "table",
     menu: "menu",
-    order: "order"
+    order: "order",
+    settings: "settings"
 };
 
 export default pageNames;

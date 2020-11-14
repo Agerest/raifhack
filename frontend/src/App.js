@@ -6,6 +6,7 @@ import Menu from './app/menu/menu';
 import Order from './app/order/order';
 import Header from './app/global/header/header';
 import pageNames from './app/global/header/pageNames';
+import Settings from './app/settings/settings';
 
 function App() {
   let history = useHistory();
@@ -25,6 +26,9 @@ function App() {
       </Route>
       <Route path="/app/order">
         <Order />
+      </Route>
+      <Route path="/app/settings">
+        <Settings />
       </Route>
     </>
   );

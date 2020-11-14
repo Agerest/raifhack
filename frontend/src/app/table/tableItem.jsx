@@ -1,4 +1,4 @@
-import { Col, UncontrolledButtonDropdown, DropdownToggle, DropdownItem, DropdownMenu } from 'reactstrap';
+import { Col, UncontrolledButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const TableItem = (personInfo = { name: "", orders: [{ orderName: "", orderPrice: 0 }], totalPrice: 0 }) => {
     return (

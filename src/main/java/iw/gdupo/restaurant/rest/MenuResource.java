@@ -1,4 +1,4 @@
-package iw.gdupo.restaurant.controller;
+package iw.gdupo.restaurant.rest;
 
 import iw.gdupo.restaurant.dto.MenuDTO;
 import iw.gdupo.restaurant.service.MenuService;

@@ -1,13 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardTitle, Container, CardHeader, CardBody, InputGroup, CardFooter, Button, InputGroupAddon, InputGroupText, Input } from "reactstrap";
+import { WebApiUrl } from "../../config";
+import useSettings from "./useSettings";
 
 const Settings = () => {
-    const [nameInput, setNameInput] = useState("");
-    const [bgColorInput, setBgColorInput] = useState("");
-    const [headerColorInput, setHeaderColorInput] = useState("");
+    const url = WebApiUrl;
+    const settings = useSettings();
+
+    const [name, setName] = useState("");
+    const [headerColor, setHeaderColor] = useState("");
+    const [headButtonsColour, setHeadButtonsColour] = useState("");
+    const [detailButtonColour, setDetailButtonColour] = useState("");
+    const [orderButtonColour, setOrderButtonColour] = useState("");
+    const [payButtonColour, setPayButtonColour] = useState("");
+
+    useEffect(async () => {
+        let load = async () => {
+            let st = await settings.get();
+
+            if (st) {
+                setName(st.restaurantName);
+                setHeaderColor(st.headColour);
+                setHeadButtonsColour(st.headButtonsColour);
+                setDetailButtonColour(st.detailButtonColour);
+                setOrderButtonColour(st.orderButtonColour);
+                setPayButtonColour(st.payButtonColour);
+            }
+        }
+        await load();
+    }, [])
 
     const save = () => {
-
+        settings.set({
+            restaurantName: name,
+            headColour: headerColor,
+            headButtonsColour: headButtonsColour,
+            detailButtonColour: detailButtonColour,
+            payButtonColour: payButtonColour
+        })
     }
 
     return (
@@ -21,49 +51,42 @@ const Settings = () => {
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Название ресторана</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="название" onInput={e => setNameInput(e.target.value)} />
+                        <Input placeholder="Введите название цвета или его HEX код" onInput={e => setName(e.target.value)} />
                     </InputGroup>
                     <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет шапки</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="цвет шапки" onInput={e => setNameInput(e.target.value)} />
+                        <Input placeholder="Введите название цвета или его HEX код" onInput={e => setHeaderColor(e.target.value)} />
                     </InputGroup>
                     <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет кнопок в шапке</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="цвет кнопок в шапке" onInput={e => setNameInput(e.target.value)} />
-                    </InputGroup>
-                    <br />
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                            <InputGroupText>Цвет фона</InputGroupText>
-                        </InputGroupAddon>
-                        <Input placeholder="цвет фона" onInput={e => setNameInput(e.target.value)} />
+                        <Input placeholder="Введите название цвета или его HEX код" value={headButtonsColour} onInput={e => setHeadButtonsColour(e.target.value)} />
                     </InputGroup>
                     <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет кнопки "Заказать" в меню</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="цвет фона" onInput={e => setNameInput(e.target.value)} />
+                        <Input placeholder="Введите название цвета или его HEX код" valid={orderButtonColour} onInput={e => setOrderButtonColour(e.target.value)} />
                     </InputGroup>
                     <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет кнопки "Подробнее" в меню</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="цвет фона" onInput={e => setNameInput(e.target.value)} />
+                        <Input placeholder="Введите название цвета или его HEX код" value={detailButtonColour} onInput={e => setDetailButtonColour(e.target.value)} />
                     </InputGroup>
                     <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет кнопки "Оплатить" в заказе</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="цвет фона" onInput={e => setNameInput(e.target.value)} />
+                        <Input placeholder="Введите название цвета или его HEX код" value={payButtonColour} onInput={e => setPayButtonColour(e.target.value)} />
                     </InputGroup>
                 </CardBody>
                 <CardFooter>

@@ -7,11 +7,14 @@ import Order from './app/order/order';
 import Header from './app/global/header/header';
 import pageNames from './app/global/header/pageNames';
 import Settings from './app/settings/settings';
+import useSettings from './app/settings/useSettings';
 
 function App() {
   let history = useHistory();
+  let settings = useSettings();
 
   useEffect(() => {
+    settings.get();
     history.push("/app/menu");
   }, []);
 

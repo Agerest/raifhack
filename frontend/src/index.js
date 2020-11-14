@@ -7,13 +7,13 @@ import { Switch, Route, useHistory, BrowserRouter, useLocation } from 'react-rou
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <App />
-      </Switch>
-    </BrowserRouter>
-  </React.StrictMode>,
+    <React.StrictMode>
+      <BrowserRouter>
+        <Switch>
+          <App />
+        </Switch>
+      </BrowserRouter>
+    </React.StrictMode>,
   document.getElementById('root')
 );
 

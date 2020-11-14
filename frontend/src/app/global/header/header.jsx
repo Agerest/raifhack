@@ -61,28 +61,28 @@ const Header = () => {
 
     return (
         <>
-            <Container className="p-0 m-0" fluid>
+            <Container className="p-0 m-0 headerColour" fluid>
                 <Navbar color="light" light expand="md">
                     <NavbarBrand href="/">iwGdupo</NavbarBrand>
                     <Collapse navbar>
                         <Nav className="mr-auto" navbar>
-                            <NavItem>
+                            <NavItem className="headerButtonColor">
                                 <NavLink href="#" active={activeItem == pageNames.table} onClick={toTable}>Стол</NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="headerButtonColor">
                                 <NavLink href="#" active={activeItem == pageNames.menu} onClick={toMenu}>Меню</NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="headerButtonColor">
                                 <NavLink href="#" onClick={callWaiter}>Позвать официанта</NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="headerButtonColor">
                                 <NavLink href="#" active={activeItem == pageNames.settings} onClick={toSettings}>Настройки</NavLink>
                             </NavItem>
 
                         </Nav>
                     </Collapse>
                     <Nav navbar>
-                        <NavItem>
+                        <NavItem className="headerButtonColor">
                             <NavLink href="#" active={activeItem == pageNames.order} onClick={toOrder}>Заказ</NavLink>
                         </NavItem>
                     </Nav>

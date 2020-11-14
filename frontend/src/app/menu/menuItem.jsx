@@ -58,8 +58,8 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
                         <CardText>Цена: {itemInfo.price}</CardText>
                     </CardBody>
                     <CardFooter className="d-flex justify-content-around">
-                        <Button style={{ width: '125px' }} color="success" onClick={order}>Заказать</Button>
-                        <Button style={{ width: '125px' }} color="primary" onClick={showDetails}>Подробнее</Button>
+                        <Button style={{ width: '125px' }} color="success" onClick={order} className="orderButtonColour">Заказать</Button>
+                        <Button style={{ width: '125px' }} color="primary" onClick={showDetails} className="detailButtonColour">Подробнее</Button>
                     </CardFooter>
                 </Card>
             </Col>

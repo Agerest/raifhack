@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row } from "reactstrap";
 import { WebApiUrl } from '../../config';
+import useSettings from '../settings/useSettings';
 import TableItem from './tableItem';
 
 const Table = () => {
     const url = WebApiUrl;
+
     const [tableItems, setTableItems] = useState([]);
 
     useEffect(() => {

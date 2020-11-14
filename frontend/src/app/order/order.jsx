@@ -90,7 +90,7 @@ const Order = () => {
                             {price ?
                                 <>
                                     <h5>Сумма к оплате: {price}</h5>
-                                    <Button color="warning" onClick={pay}>Оплатить</Button>
+                                    <Button className="payButtonColour" color="warning" onClick={pay}>Оплатить</Button>
                                 </>
                                 : ""}
                         </Card>

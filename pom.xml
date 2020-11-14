@@ -155,11 +155,11 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <target>
-                                <copy todir="${project.build.directory}\classes\public">
-                                    <fileset dir="${project.basedir}\frontend\build"/>
+                            <tasks>
+                                <copy todir="${project.build.directory}/classes/public">
+                                    <fileset dir="${project.basedir}/frontend/build"/>
                                 </copy>
-                            </target>
+                            </tasks>
                         </configuration>
                     </execution>
                 </executions>

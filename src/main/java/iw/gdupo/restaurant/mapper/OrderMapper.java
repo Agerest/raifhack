@@ -15,4 +15,6 @@ public interface OrderMapper {
     UserShortResponseDTO toUserShortResponseDTO(User user);
 
     List<OrderResponseDTO> toDtoList(Collection<Order> entities);
+
+    OrderResponseDTO toDto(Order entities);
 }

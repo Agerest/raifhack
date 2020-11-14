@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -28,5 +29,5 @@ public class Menu extends AbstractEntity {
     private Integer weight;
 
     @Column(name = "price")
-    private Integer price;
+    private BigDecimal price;
 }

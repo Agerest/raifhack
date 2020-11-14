@@ -22,7 +22,7 @@ const Auth = (info = { isOpen: false, setIsOpen: () => { } }) => {
         <Modal isOpen={info.isOpen}>
             <ModalBody>
                 <h5>Представтесь, пожалуйста. Как вас зовут?</h5>
-                <Input onInput={e => setAuthName(e.target.value)} />
+                <Input value={authName} onInput={e => setAuthName(e.target.value)} />
             </ModalBody>
             <ModalFooter>
                 <Button color="primary" onClick={auth}>Отправить</Button>

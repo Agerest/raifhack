@@ -35,7 +35,7 @@ const useSettings = () => {
 
     const setBgColor = (className, color) => {
         let elements = document.getElementsByClassName(className);
-
+        
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.backgroundColor = color;
         }
@@ -46,7 +46,7 @@ const useSettings = () => {
 
         if (stylesResp.ok) {
             let styles = await stylesResp.json();
-
+            console.log(styles);
             if (styles.headColour) setBgColor("headerColour", styles.headColour);
             if (styles.headButtonsColour) setBgColor("headerButtonColour", styles.headButtonsColour);
             if (styles.orderButtonColour) setBgColor("orderButtonColour", styles.orderButtonColour);

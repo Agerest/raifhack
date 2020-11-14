@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import {
     Col, Card,
     CardHeader, CardBody, CardText, CardFooter,
-    Button, CardImg, Modal, ModalHeader,
-    ModalBody, ModalFooter, CardTitle, Input
+    Button, CardImg,
+    CardTitle
 } from 'reactstrap';
 import { WebApiUrl } from '../../config';
 import Auth from '../global/auth/auth';
@@ -12,12 +12,12 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
     const url = WebApiUrl;
 
     const [authIsOpen, setAuthIsOpen] = useState(false);
-    const [detailsIsOpen, setDetailsIsOpen] = useState(false);
-    const [details, setDetails] = useState({
-        description: "",
-        photo: "",
+    // const [detailsIsOpen, setDetailsIsOpen] = useState(false);
+    // const [details, setDetails] = useState({
+    //     description: "",
+    //     photo: "",
 
-    });
+    // });
 
     const order = async () => {
         let isAuthResponse = await fetch(url + "/api/user/is-authenticated");
@@ -35,14 +35,14 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
     };
 
     const showDetails = () => {
-        setDetailsIsOpen(true);
+        // setDetailsIsOpen(true);
 
 
     };
 
-    const closeDetails = () => {
-        setDetailsIsOpen(false);
-    }
+    // const closeDetails = () => {
+    //     // setDetailsIsOpen(false);
+    // }
 
     return (
         <>
@@ -58,8 +58,8 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
                         <CardText>Цена: {itemInfo.price}</CardText>
                     </CardBody>
                     <CardFooter className="d-flex justify-content-around">
-                        <Button style={{ width: '125px' }} color="success" onClick={order} className="orderButtonColour">Заказать</Button>
-                        <Button style={{ width: '125px' }} color="primary" onClick={showDetails} className="detailButtonColour">Подробнее</Button>
+                        <Button style={{ width: '125px' }} onClick={order} className="orderButtonColour">Заказать</Button>
+                        <Button style={{ width: '125px' }} onClick={showDetails} className="detailButtonColour">Подробнее</Button>
                     </CardFooter>
                 </Card>
             </Col>

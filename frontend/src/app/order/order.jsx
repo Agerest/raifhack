@@ -2,15 +2,21 @@ import { Container, Row, Col, Card, Button, CardHeader, CardTitle, InputGroup, I
 import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
 import { useEffect, useState } from "react";
 import { WebApiUrl } from "../../config";
+import useSettings from "../settings/useSettings";
 
 const Order = () => {
     const url = WebApiUrl;
+
+    const settings = useSettings();
+
     const [price, setPrice] = useState(0);
     const [totalOrder, setTotalOrder] = useState([]);
     const [unpaidOrder, setUnpaidOrder] = useState({ orders: [], totalPrice: 0 });
 
     useEffect(() => {
         const load = async () => {
+            await settings.get();
+
             let totalOrderResp = await fetch(url + "/api/order/list");
             let unpaidOrderResponse = await fetch(url + "/api/order/list/unpaid?tableId=0");
 
@@ -61,17 +67,14 @@ const Order = () => {
                         </CardHeader>
                         <CardBody>
                             {unpaidOrder.orders.map((item, index) =>
-                                <>
-                                    <InputGroup key={index}>
-                                        <InputGroupAddon addonType="prepend">
-                                            <InputGroupText>
-                                                <Input checked disabled addon type="checkbox" />
-                                            </InputGroupText>
-                                        </InputGroupAddon>
-                                        <Input disabled placeholder={item.name} />
-                                    </InputGroup>
-                                    <br />
-                                </>
+                                <InputGroup key={index}>
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>
+                                            <Input checked disabled addon type="checkbox" />
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                    <Input disabled placeholder={item.name} />
+                                </InputGroup>
                             )}
                         </CardBody>
                     </Card> : ""}

@@ -35,6 +35,7 @@ const Settings = () => {
             restaurantName: name,
             headColour: headerColor,
             headButtonsColour: headButtonsColour,
+            orderButtonColour: orderButtonColour,
             detailButtonColour: detailButtonColour,
             payButtonColour: payButtonColour
         })
@@ -51,14 +52,14 @@ const Settings = () => {
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Название ресторана</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Введите название цвета или его HEX код" onInput={e => setName(e.target.value)} />
+                        <Input placeholder="Введите название цвета или его HEX код" value={name} onInput={e => setName(e.target.value)} />
                     </InputGroup>
                     <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет шапки</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Введите название цвета или его HEX код" onInput={e => setHeaderColor(e.target.value)} />
+                        <Input placeholder="Введите название цвета или его HEX код" value={headerColor} onInput={e => setHeaderColor(e.target.value)} />
                     </InputGroup>
                     <br />
                     <InputGroup>
@@ -72,7 +73,7 @@ const Settings = () => {
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет кнопки "Заказать" в меню</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Введите название цвета или его HEX код" valid={orderButtonColour} onInput={e => setOrderButtonColour(e.target.value)} />
+                        <Input placeholder="Введите название цвета или его HEX код" value={orderButtonColour} onInput={e => setOrderButtonColour(e.target.value)} />
                     </InputGroup>
                     <br />
                     <InputGroup>

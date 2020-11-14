@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Button, Col, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink, Collapse } from "reactstrap";
+import useSettings from '../../settings/useSettings';
 import IwGdupoAlert from '../IwGdupoAlert';
 import pageNames from './pageNames';
 

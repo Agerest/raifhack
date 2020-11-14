@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row } from 'reactstrap';
 import config, { WebApiUrl } from '../../config';
+import useSettings from '../settings/useSettings';
 import MenuItem from './menuItem';
 
 const Menu = () => {
+    let url = WebApiUrl;
+
     const [items, setItems] = useState([]);
 
     useEffect(async () => {
         const load = async () => {
-            let url = WebApiUrl;
-
             let menuItems = await fetch(url + "/api/menu/list");
 
-            if (menuItems.ok){
+            if (menuItems.ok) {
                 let json = await menuItems.json();
                 setItems(json);
             }
-            
+
         };
         await load();
     }, []);

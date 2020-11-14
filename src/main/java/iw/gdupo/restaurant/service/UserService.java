@@ -1,8 +1,9 @@
 package iw.gdupo.restaurant.service;
 
 import iw.gdupo.restaurant.domain.User;
-import iw.gdupo.restaurant.dto.OrderDTO;
-import iw.gdupo.restaurant.dto.UserDTO;
+import iw.gdupo.restaurant.dto.order.OrderResponseDTO;
+import iw.gdupo.restaurant.dto.user.UserRequestDTO;
+import iw.gdupo.restaurant.dto.user.UserResponseDTO;
 import iw.gdupo.restaurant.mapper.UserJsonMapper;
 import iw.gdupo.restaurant.mapper.UserMapper;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -23,21 +23,27 @@ public class UserService {
     private final UserMapper userMapper;
     private final OrderService orderService;
 
-    public UserDTO getUserFromCookie(Cookie data) {
+    public UserResponseDTO getUserResponseFromCookie(Cookie data) {
+        User user = getUserFromCookie(data);
+        if (user == null) {
+            return null;
+        }
+        UserResponseDTO userResponseDTO = userMapper.toResponseDTO(null);
+        List<OrderResponseDTO> orderList = orderService.getOrderListByUserId(userResponseDTO.getId());
+        userResponseDTO.setOrders(orderList);
+        userResponseDTO.setTotalPrice(orderList.stream().map(OrderResponseDTO::getPrice).reduce(0, Integer::sum));
+        return userResponseDTO;
+    }
+
+    public User getUserFromCookie(Cookie data) {
         if (!isAuthenticated(data)) {
             return null;
         }
-        UserDTO user = userMapper.toDto(userJsonMapper.toObject(data.getValue()));
-        List<OrderDTO> orderList = orderService.getOrderList(user.getId());
-        user.setOrders(orderList);
-        user.setTotalPrice(orderList.stream().map(OrderDTO::getPrice).reduce(0, Integer::sum));
-        return user;
+        return userJsonMapper.toObject(data.getValue());
     }
 
-    public UUID registerNewUser(HttpServletResponse response, String name) {
-        User user = new User();
-        user.setId(UUID.randomUUID());
-        user.setName(name);
+    public Long registerNewUser(HttpServletResponse response, UserRequestDTO userRequestDTO) {
+        User user = userMapper.toEntity(userRequestDTO);
         Cookie cookie = new Cookie(DATA_ID, userJsonMapper.toJson(user));
         cookie.setMaxAge(3600);
         cookie.setPath("/");

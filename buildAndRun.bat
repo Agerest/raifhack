@@ -9,3 +9,4 @@ cd ../..
 call mvn package
 cd target
 call java -jar iw-gdupo-restaurant-1.0-SNAPSHOT.jar
+cd ..

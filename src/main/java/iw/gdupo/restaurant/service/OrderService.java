@@ -2,16 +2,16 @@ package iw.gdupo.restaurant.service;
 
 import iw.gdupo.restaurant.domain.Menu;
 import iw.gdupo.restaurant.domain.Order;
-import iw.gdupo.restaurant.dto.OrderDTO;
-import iw.gdupo.restaurant.dto.UserDTO;
+import iw.gdupo.restaurant.domain.User;
+import iw.gdupo.restaurant.dto.order.OrderListDTO;
 import iw.gdupo.restaurant.dto.order.OrderRequestDTO;
+import iw.gdupo.restaurant.dto.order.OrderResponseDTO;
 import iw.gdupo.restaurant.mapper.OrderMapper;
 import iw.gdupo.restaurant.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -21,15 +21,27 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final MenuService menuService;
 
-    public List<OrderDTO> getOrderList(UUID userId) {
+    public List<OrderResponseDTO> getOrderListByUserId(Long userId) {
         return orderMapper.toDtoList(orderRepository.findAllByUserId(userId));
     }
 
-    public Long createOrder(UserDTO user, OrderRequestDTO orderDTO) {
+    public List<OrderResponseDTO> getOrderList() {
+        return orderMapper.toDtoList(orderRepository.findAll());
+    }
+
+    public Long createOrder(User user, OrderRequestDTO orderDTO) {
         Menu menu = menuService.getMenu(orderDTO.getMenuId());
         Order order = new Order();
         order.setMenu(menu);
-        order.setUserId(user.getId());
+        order.setUser(user);
         return orderRepository.save(order).getId();
+    }
+
+    public OrderListDTO getUnpaidOrderList(Long tableId) {
+        OrderListDTO orderListDTO = new OrderListDTO();
+        List<OrderResponseDTO> orders = orderMapper.toDtoList(orderRepository.findAllByTableIdAndPaidFalse(tableId));
+        orderListDTO.setOrders(orders);
+        orderListDTO.setTotalPrice(orders.stream().map(OrderResponseDTO::getPrice).reduce(0, Integer::sum));
+        return orderListDTO;
     }
 }

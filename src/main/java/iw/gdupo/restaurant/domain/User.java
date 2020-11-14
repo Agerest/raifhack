@@ -1,12 +1,23 @@
 package iw.gdupo.restaurant.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@Entity
 @Data
-public class User {
+@Table(name = "user")
+public class User extends AbstractEntity {
 
-    private UUID id;
-    private String name;
+    @Column(name = "nickname")
+    private String nickname;
+
+    @Column(name = "table_id")
+    private Long tableId;
 }

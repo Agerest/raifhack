@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -19,9 +18,16 @@ import java.util.UUID;
 public class Order extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "fk_order")
+    @JoinColumn(name = "fk_menu")
     private Menu menu;
 
-    @Column(name = "user_id")
-    private UUID userId;
+    @ManyToOne
+    @JoinColumn(name = "fk_users")
+    private User user;
+
+    @Column(name = "tabble_id")
+    private Long tableId;
+
+    @Column(name = "complete")
+    private boolean paid = false;
 }

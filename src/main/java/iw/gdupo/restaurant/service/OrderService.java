@@ -11,7 +11,9 @@ import iw.gdupo.restaurant.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -41,7 +43,19 @@ public class OrderService {
         OrderListDTO orderListDTO = new OrderListDTO();
         List<OrderResponseDTO> orders = orderMapper.toDtoList(orderRepository.findAllByTableIdAndPaidFalse(tableId));
         orderListDTO.setOrders(orders);
-        orderListDTO.setTotalPrice(orders.stream().map(OrderResponseDTO::getPrice).reduce(0, Integer::sum));
+        orderListDTO.setTotalPrice(orders.stream().map(OrderResponseDTO::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
         return orderListDTO;
+    }
+
+    public OrderListDTO getPaidOrderList(Long tableId) {
+        OrderListDTO orderListDTO = new OrderListDTO();
+        List<OrderResponseDTO> orders = orderMapper.toDtoList(orderRepository.findAllByTableIdAndPaidTrue(tableId));
+        orderListDTO.setOrders(orders);
+        orderListDTO.setTotalPrice(orders.stream().map(OrderResponseDTO::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add));
+        return orderListDTO;
+    }
+
+    public List<Order> getByIds(Set<Long> orderIds) {
+        return orderRepository.findAllByIdIn(orderIds);
     }
 }

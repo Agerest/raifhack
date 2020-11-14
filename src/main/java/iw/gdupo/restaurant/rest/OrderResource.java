@@ -38,6 +38,11 @@ public class OrderResource {
         return orderService.getUnpaidOrderList(tableId);
     }
 
+    @GetMapping("/list/paid")
+    public OrderListDTO getPaidOrderList(@RequestParam Long tableId) {
+        return orderService.getPaidOrderList(tableId);
+    }
+
     @GetMapping("/list")
     public List<OrderResponseDTO> getOrderList() {
         return orderService.getOrderList();

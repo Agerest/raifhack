@@ -1,5 +1,4 @@
-call mvn clean
-call mvn compile
+call mvn clean compile
 cd target/classes
 mkdir public
 cd ../..

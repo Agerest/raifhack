@@ -1,5 +1,6 @@
 package iw.gdupo.restaurant.service;
 
+import iw.gdupo.restaurant.domain.Menu;
 import iw.gdupo.restaurant.dto.MenuDTO;
 import iw.gdupo.restaurant.mapper.MenuMapper;
 import iw.gdupo.restaurant.repository.MenuRepository;
@@ -21,5 +22,10 @@ public class MenuService {
 
     public Long addNewMenu(MenuDTO menuDTO) {
         return menuRepository.save(menuMapper.toEntity(menuDTO)).getId();
+    }
+
+    public Menu getMenu(Long menuId) {
+        return menuRepository.findById(menuId)
+                .orElseThrow(() -> new IllegalStateException("Could not find menu with id = " + menuId));
     }
 }

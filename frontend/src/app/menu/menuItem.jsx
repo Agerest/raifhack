@@ -19,14 +19,15 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
 
     });
 
-    const order = async () => 
-    {
-        console.log("order");
+    const order = async () => {
         let isAuthResponse = await fetch(url + "/api/user/is-authenticated");
         let isAuthJson = await isAuthResponse.json();
 
         if (isAuthJson) {
-
+            fetch(url + "/api/order/new", {
+                method: "POST",
+                body: JSON.stringify({ menuId: itemInfo.id })
+            })
         }
         else {
             setAuthIsOpen(true);
@@ -57,8 +58,8 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
                         <CardText>Цена: {itemInfo.price}</CardText>
                     </CardBody>
                     <CardFooter className="d-flex justify-content-around">
-                        <Button color="success" onClick={order}>Заказать</Button>
-                        <Button color="primary" onClick={showDetails}>Подробнее</Button>
+                        <Button style={{ width: '125px' }} color="success" onClick={order}>Заказать</Button>
+                        <Button style={{ width: '125px' }} color="primary" onClick={showDetails}>Подробнее</Button>
                     </CardFooter>
                 </Card>
             </Col>

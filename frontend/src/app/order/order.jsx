@@ -1,5 +1,6 @@
 import { Container, Row, Col, Card, Button, CardHeader, CardTitle } from "reactstrap";
 import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
+
 const Order = () => {
     const paymentPage = new PaymentPageSdk('000001680200002-80200002', {
         url: 'https://test.ecom.raiffeisen.ru/pay'

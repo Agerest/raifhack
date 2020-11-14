@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Button, Col, Container, Nav, Navbar, NavbarBrand, NavItem, Row, NavLink } from "reactstrap";
+import { Button, Col, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink, Collapse } from "reactstrap";
 import IwGdupoAlert from '../IwGdupoAlert';
 import pageNames from './pageNames';
 
 const Header = () => {
-    const [pageName, setPageName] = useState("");
     const history = useHistory();
 
-    const [tableIsActive, setTableIsActive] = useState(false);
-    const [menuIsActive, setMenuIsActive] = useState(false);
-    const [orderIsActive, setOrderIsActive] = useState(false);
+    const [activeItem, setActiveItem] = useState(pageNames.menu);
 
     const [alertInfo, setAlertInfo] = useState({
         isOpen: false,
@@ -20,49 +17,37 @@ const Header = () => {
 
     useEffect(() => {
         const init = () => {
-            clearActive();
-
-            console.log("location", );
-
             switch (history.location) {
-                case "/app/" + pageNames.table: setTableIsActive(true);
+                case "/app/" + pageNames.table: setActiveItem(pageNames.table);
                     break;
-                case "/app/" + pageNames.menu: setMenuIsActive(true);
+                case "/app/" + pageNames.menu: setActiveItem(pageNames.menu);
                     break;
-                case "/app/" + pageNames.order: setOrderIsActive(true);
+                case "/app/" + pageNames.order: setActiveItem(pageNames.order);
+                    break;
+                case "/app/" + pageNames.settings: setActiveItem(pageNames.settings);
                     break;
             }
         }
         init();
     }, []);
 
-    const clearActive = () => {
-        if (tableIsActive) setTableIsActive(false);
-        if (menuIsActive) setMenuIsActive(false);
-        if (orderIsActive) setOrderIsActive(false);
-    }
-
     const toTable = () => {
-        clearActive();
-
-        setPageName(pageNames.table);
-        setTableIsActive(true);
+        setActiveItem(pageNames.table);
         history.push("/app/table");
     }
 
     const toMenu = () => {
-        clearActive();
-
-        setPageName(pageNames.menu);
-        setMenuIsActive(true);
+        setActiveItem(pageNames.menu);
         history.push("/app/menu");
     }
 
-    const toOrder = () => {
-        clearActive();
+    const toSettings = () => {
+        setActiveItem(pageNames.settings);
+        history.push("/app/settings");
+    }
 
-        setPageName(pageNames.order);
-        setOrderIsActive(true);
+    const toOrder = () => {
+        setActiveItem(pageNames.order);
         history.push("/app/order");
     }
 
@@ -76,21 +61,32 @@ const Header = () => {
 
     return (
         <>
-            <Container fluid>
-                <Nav className="row text-center" tabs>
-                    <NavItem className="col-3">
-                        <NavLink href="#" active={tableIsActive} onClick={toTable}>Стол</NavLink>
-                    </NavItem>
-                    <NavItem className="col-3">
-                        <NavLink href="#" active={menuIsActive} onClick={toMenu}>Меню</NavLink>
-                    </NavItem>
-                    <NavItem className="col-3">
-                        <NavLink href="#" active={orderIsActive} onClick={toOrder}>Заказ</NavLink>
-                    </NavItem>
-                    <NavItem className="col-3">
-                        <NavLink href="#" onClick={callWaiter}>Позвать официанта</NavLink>
-                    </NavItem>
-                </Nav>
+            <Container className="p-0 m-0" fluid>
+                <Navbar color="light" light expand="md">
+                    <NavbarBrand href="/">iwGdupo</NavbarBrand>
+                    <Collapse navbar>
+                        <Nav className="mr-auto" navbar>
+                            <NavItem>
+                                <NavLink href="#" active={activeItem == pageNames.table} onClick={toTable}>Стол</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="#" active={activeItem == pageNames.menu} onClick={toMenu}>Меню</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="#" onClick={callWaiter}>Позвать официанта</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="#" active={activeItem == pageNames.settings} onClick={toSettings}>Настройки</NavLink>
+                            </NavItem>
+
+                        </Nav>
+                    </Collapse>
+                    <Nav navbar>
+                        <NavItem>
+                            <NavLink href="#" active={activeItem == pageNames.order} onClick={toOrder}>Заказ</NavLink>
+                        </NavItem>
+                    </Nav>
+                </Navbar>
             </Container>
             <IwGdupoAlert
                 isOpen={alertInfo.isOpen}

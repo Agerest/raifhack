@@ -1,3 +1,6 @@
 /.idea/
 /iw-gdupo-restaurant.iml
 /target/
+frontend/node_modules
+
+.gitignore

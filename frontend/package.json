@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@raiffeisen-ecom/payment-sdk": "git+https://github.com/Raiffeisen-DGTL/ecom-payment-sdk.git",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
     "bootstrap": "^4.5.3",
+    "fetch-inject": "^1.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
@@ -37,5 +39,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "url-loader": "^4.1.1"
   }
 }

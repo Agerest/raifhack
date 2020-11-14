@@ -4,7 +4,7 @@ const IwGdupoAlert = (alertInfo = { isOpen: false, alertTitle: "", alertText: ""
     return (
         <Modal isOpen={alertInfo.isOpen}>
             <ModalHeader>
-                <h3>{alertInfo.alertTitle}</h3>
+                {alertInfo.alertTitle}
             </ModalHeader>
             <ModalBody>
                 <p>{alertInfo.alertText}</p>

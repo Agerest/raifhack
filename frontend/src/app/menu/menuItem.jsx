@@ -3,11 +3,15 @@ import {
     Col, Card,
     CardHeader, CardBody, CardText, CardFooter,
     Button, CardImg, Modal, ModalHeader,
-    ModalBody, ModalFooter, CardTitle
+    ModalBody, ModalFooter, CardTitle, Input
 } from 'reactstrap';
+import { WebApiUrl } from '../../config';
+import Auth from '../global/auth/auth';
 
 const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", weight: 0, price: 0 }) => {
+    const url = WebApiUrl;
 
+    const [authIsOpen, setAuthIsOpen] = useState(false);
     const [detailsIsOpen, setDetailsIsOpen] = useState(false);
     const [details, setDetails] = useState({
         description: "",
@@ -15,8 +19,18 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
 
     });
 
-    const order = () => {
+    const order = async () => 
+    {
+        console.log("order");
+        let isAuthResponse = await fetch(url + "/api/user/is-authenticated");
+        let isAuthJson = await isAuthResponse.json();
 
+        if (isAuthJson) {
+
+        }
+        else {
+            setAuthIsOpen(true);
+        }
     };
 
     const showDetails = () => {
@@ -31,10 +45,10 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
 
     return (
         <>
-            <Col lg="4">
+            <Col className="mt-3" lg="4">
                 <Card className="text-center">
                     <CardHeader>
-                        <CardTitle tag="h3">{itemInfo.name}</CardTitle>
+                        <CardTitle>{itemInfo.name}</CardTitle>
                     </CardHeader>
                     <CardImg src={itemInfo.shortImg}></CardImg>
                     <CardBody>
@@ -48,19 +62,11 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
                     </CardFooter>
                 </Card>
             </Col>
-            <Modal isOpen={detailsIsOpen}>
-                <ModalHeader>
-                    <h2>{itemInfo.name}</h2>
-                </ModalHeader>
-                <ModalBody>
-                    <img src={details.photo}></img>
-                    <p>{details.description}</p>
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" onClick={order}>Заказать</Button>
-                    <Button color="secondary" onClick={closeDetails}>Закрыть</Button>
-                </ModalFooter>
-            </Modal>
+            <Auth
+                isOpen={authIsOpen}
+                setIsOpen={setAuthIsOpen}
+            />
+
         </>
     );
 }

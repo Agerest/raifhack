@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row } from 'reactstrap';
-import config, { WebApiUrl } from '../../config';
+import { WebApiUrl} from '../../config';
 import useSettings from '../settings/useSettings';
 import MenuItem from './menuItem';
 
-const Menu = () => {
+const Menu = (props) => {
+    console.log(props)
     let url = WebApiUrl;
 
     const [items, setItems] = useState([]);
 
-    useEffect(async () => {
+    useEffect(() => {
         const load = async () => {
             let menuItems = await fetch(url + "/api/menu/list");
-
+    
             if (menuItems.ok) {
                 let json = await menuItems.json();
                 setItems(json);
             }
-
         };
-        await load();
+        load();
     }, []);
 
     return (
@@ -34,6 +34,7 @@ const Menu = () => {
                         description={item.shortDescription}
                         weight={item.weight}
                         price={item.price}
+                        styles={props.styles}
                     />
                 )}
             </Row>

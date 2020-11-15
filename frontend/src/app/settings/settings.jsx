@@ -1,34 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card, CardTitle, Container, CardHeader, CardBody, InputGroup, CardFooter, Button, InputGroupAddon, InputGroupText, Input } from "reactstrap";
 import { WebApiUrl } from "../../config";
 import useSettings from "./useSettings";
 
-const Settings = () => {
+const Settings = (props) => {
     const url = WebApiUrl;
     const settings = useSettings();
 
-    const [name, setName] = useState("");
-    const [headerColor, setHeaderColor] = useState("");
-    const [headButtonsColour, setHeadButtonsColour] = useState("");
-    const [detailButtonColour, setDetailButtonColour] = useState("");
-    const [orderButtonColour, setOrderButtonColour] = useState("");
-    const [payButtonColour, setPayButtonColour] = useState("");
-
-    useEffect(async () => {
-        let load = async () => {
-            let st = await settings.get();
-
-            if (st) {
-                setName(st.restaurantName);
-                setHeaderColor(st.headColour);
-                setHeadButtonsColour(st.headButtonsColour);
-                setDetailButtonColour(st.detailButtonColour);
-                setOrderButtonColour(st.orderButtonColour);
-                setPayButtonColour(st.payButtonColour);
-            }
-        }
-        await load();
-    }, [])
+    const [name, setName] = useState(props.styles.restaurantName);
+    const [headerColor, setHeaderColor] = useState(props.styles.headColour);
+    const [headButtonsColour, setHeadButtonsColour] = useState(props.styles.headButtonsColour);
+    const [detailButtonColour, setDetailButtonColour] = useState(props.styles.detailButtonColour);
+    const [orderButtonColour, setOrderButtonColour] = useState(props.styles.orderButtonColour);
+    const [payButtonColour, setPayButtonColour] = useState(props.styles.payButtonColour);
 
     const save = () => {
         settings.set({
@@ -38,7 +22,7 @@ const Settings = () => {
             orderButtonColour: orderButtonColour,
             detailButtonColour: detailButtonColour,
             payButtonColour: payButtonColour
-        })
+        }).then(() => window.location.reload())
     }
 
     return (

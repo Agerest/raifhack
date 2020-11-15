@@ -4,8 +4,17 @@ import { WebApiUrl } from '../../config';
 import useSettings from '../settings/useSettings';
 import TableItem from './tableItem';
 
-const Table = () => {
+const Table = (props) => {
     const url = WebApiUrl;
+
+    const settings = useSettings();
+
+    useEffect(() => {
+        const load = async () => {
+            await settings.get();
+        }
+        load();
+    })
 
     const [tableItems, setTableItems] = useState([]);
 
@@ -15,7 +24,6 @@ const Table = () => {
 
             if (getUsersResponse.ok) {
                 let usersReponse = await getUsersResponse.json();
-                setTableItems(usersReponse);
             }
         };
         load();

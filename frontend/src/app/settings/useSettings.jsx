@@ -1,9 +1,9 @@
-import { WebApiUrl } from "../../config"
+import * as config from "../../config"
 
 const useSettings = () => {
-    const url = WebApiUrl;
+    const url = config.WebApiUrl;
 
-    const setSettings = async (styles = {
+    const setSettings = async (newStyles = {
         detailButtonColour: "",
         headButtonsColour: "",
         headColour: "",
@@ -14,13 +14,13 @@ const useSettings = () => {
     }) => {
         let body = {};
 
-        if (styles.detailButtonColour) body.detailButtonColour = styles.detailButtonColour;
-        if (styles.headButtonsColour) body.headButtonsColour = styles.headButtonsColour;
-        if (styles.headColour) body.headColour = styles.headColour;
-        if (styles.imageUrl) body.imageUrl = styles.imageUrl;
-        if (styles.orderButtonColour) body.orderButtonColour = styles.orderButtonColour;
-        if (styles.payButtonColour) body.payButtonColour = styles.payButtonColour;
-        if (styles.restaurantName) body.restaurantName = styles.restaurantName;
+        if (newStyles.detailButtonColour) body.detailButtonColour = newStyles.detailButtonColour;
+        if (newStyles.headButtonsColour) body.headButtonsColour = newStyles.headButtonsColour;
+        if (newStyles.headColour) body.headColour = newStyles.headColour;
+        if (newStyles.imageUrl) body.imageUrl = newStyles.imageUrl;
+        if (newStyles.orderButtonColour) body.orderButtonColour = newStyles.orderButtonColour;
+        if (newStyles.payButtonColour) body.payButtonColour = newStyles.payButtonColour;
+        if (newStyles.restaurantName) body.restaurantName = newStyles.restaurantName;
 
         await fetch(url + "/api/settings/new", {
             method: "POST",
@@ -30,36 +30,20 @@ const useSettings = () => {
             body: JSON.stringify(body)
         });
 
-        getSettings();
-    }
-
-    const setBgColor = (className, color) => {
-        let elements = document.getElementsByClassName(className);
-        
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].style.backgroundColor = color;
-        }
+        return await getSettings();
     }
 
     const getSettings = async () => {
-        let stylesResp = await fetch(url + "/api/settings/get");
+        let getSettingsResp = await fetch(url + "/api/settings/get");
 
-        if (stylesResp.ok) {
-            let styles = await stylesResp.json();
-            console.log(styles);
-            if (styles.headColour) setBgColor("headerColour", styles.headColour);
-            if (styles.headButtonsColour) setBgColor("headerButtonColour", styles.headButtonsColour);
-            if (styles.orderButtonColour) setBgColor("orderButtonColour", styles.orderButtonColour);
-            if (styles.detailButtonColour) setBgColor("detailButtonColour", styles.detailButtonColour);
-            if (styles.payButtonColour) setBgColor("payButtonColour", styles.payButtonColour);
-
-            return styles;
+        if (getSettingsResp.ok) {
+            return await getSettingsResp.json();   
         }
     }
 
     return {
-        get: getSettings,
-        set: setSettings
+        set: setSettings,
+        get: getSettings
     }
 }
 

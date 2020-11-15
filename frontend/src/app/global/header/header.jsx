@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Button, Col, Container, Nav, Navbar, NavbarBrand, NavItem, NavLink, Collapse } from "reactstrap";
-import useSettings from '../../settings/useSettings';
 import IwGdupoAlert from '../IwGdupoAlert';
 import pageNames from './pageNames';
 
-const Header = () => {
+const Header = (props) => {
     const history = useHistory();
 
     const [activeItem, setActiveItem] = useState(pageNames.menu);
@@ -63,20 +62,20 @@ const Header = () => {
     return (
         <>
             <Container className="p-0 m-0 headerColour" fluid>
-                <Navbar color="light" light expand="md">
-                    <NavbarBrand href="/">iwGdupo</NavbarBrand>
+                <Navbar style={{ backgroundColor: props.styles.headColour }} light expand="md">
+                    <NavbarBrand href="/">{props.styles.restaurantName}</NavbarBrand>
                     <Collapse navbar>
                         <Nav className="mr-auto" navbar>
-                            <NavItem className="headerButtonColor">
+                            <NavItem style={{ backgroundColor: props.styles.headButtonsColour }}>
                                 <NavLink href="#" active={activeItem == pageNames.table} onClick={toTable}>Стол</NavLink>
                             </NavItem>
-                            <NavItem className="headerButtonColor">
+                            <NavItem style={{ backgroundColor: props.styles.headButtonsColour }}>
                                 <NavLink href="#" active={activeItem == pageNames.menu} onClick={toMenu}>Меню</NavLink>
                             </NavItem>
-                            <NavItem className="headerButtonColor">
+                            <NavItem style={{ backgroundColor: props.styles.headButtonsColour }}>
                                 <NavLink href="#" onClick={callWaiter}>Позвать официанта</NavLink>
                             </NavItem>
-                            <NavItem className="headerButtonColor">
+                            <NavItem style={{ backgroundColor: props.styles.headButtonsColour }}>
                                 <NavLink href="#" active={activeItem == pageNames.settings} onClick={toSettings}>Настройки</NavLink>
                             </NavItem>
 

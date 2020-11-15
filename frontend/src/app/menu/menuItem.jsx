@@ -8,7 +8,7 @@ import {
 import { WebApiUrl } from '../../config';
 import Auth from '../global/auth/auth';
 
-const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", weight: 0, price: 0 }) => {
+const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", weight: 0, price: 0, styles: {} }) => {
     const url = WebApiUrl;
 
     const [authIsOpen, setAuthIsOpen] = useState(false);
@@ -58,8 +58,10 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
                         <CardText>Цена: {itemInfo.price}</CardText>
                     </CardBody>
                     <CardFooter className="d-flex justify-content-around">
-                        <Button style={{ width: '125px' }} onClick={order} className="orderButtonColour">Заказать</Button>
-                        <Button style={{ width: '125px' }} onClick={showDetails} className="detailButtonColour">Подробнее</Button>
+                        <Button style={{ width: '125px', backgroundColor: itemInfo.styles.orderButtonColour }}
+                            onClick={order}>Заказать</Button>
+                        <Button style={{ width: '125px', backgroundColor: itemInfo.styles.detailButtonColour }}
+                            onClick={showDetails}>Подробнее</Button>
                     </CardFooter>
                 </Card>
             </Col>

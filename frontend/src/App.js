@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Switch, Route, useHistory, BrowserRouter, useLocation } from 'react-router-dom';
 import './App.css';
 import Table from './app/table/table';
@@ -13,25 +13,33 @@ function App() {
   let history = useHistory();
   let settings = useSettings();
 
+  let [styles, setStyles] = useState({});
+
   useEffect(() => {
-    settings.get();
-    history.push("/app/menu");
+    let getSettings = async () => {
+      let st = await settings.get();
+
+      if (st) setStyles(st);
+
+      history.push("/app/menu");
+    }
+    getSettings();
   }, []);
 
   return (
     <>
-      <Header pageName={pageNames.menu} />
+      <Header styles={styles} />
       <Route path="/app/table">
-        <Table />
+        <Table styles={styles} />
       </Route>
       <Route path="/app/menu">
-        <Menu />
+        <Menu styles={styles} />
       </Route>
       <Route path="/app/order">
-        <Order />
+        <Order styles={styles} />
       </Route>
       <Route path="/app/settings">
-        <Settings />
+        <Settings styles={styles} />
       </Route>
     </>
   );

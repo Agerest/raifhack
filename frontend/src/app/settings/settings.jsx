@@ -22,7 +22,7 @@ const Settings = (props) => {
             orderButtonColour: orderButtonColour,
             detailButtonColour: detailButtonColour,
             payButtonColour: payButtonColour
-        }).then(() => window.location.reload())
+        }).then(() => window.location.href = "/")
     }
 
     return (

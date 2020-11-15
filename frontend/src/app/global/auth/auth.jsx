@@ -25,6 +25,7 @@ const Auth = (info = { isOpen: false, setIsOpen: () => { } }) => {
         <Modal isOpen={info.isOpen}>
             <ModalBody>
                 <h5>Представтесь, пожалуйста. Как вас зовут?</h5>
+                <p>После чего закажите снова</p>
                 <Input value={authName} onInput={e => setAuthName(e.target.value)} />
             </ModalBody>
             <ModalFooter>

@@ -71,7 +71,7 @@ const Order = (props) => {
     }
 
     const pay = async () => {
-        let unpaidResponse = await fetch(url + "/api/order/list/unpaid");
+        let unpaidResponse = await fetch(url + "/api/order/list/unpaid?tableId=0");
         let unpaid = await unpaidResponse.json();
 
         await getPaymentInfo();

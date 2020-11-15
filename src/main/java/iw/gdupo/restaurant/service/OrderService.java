@@ -3,6 +3,7 @@ package iw.gdupo.restaurant.service;
 import iw.gdupo.restaurant.domain.Menu;
 import iw.gdupo.restaurant.domain.Order;
 import iw.gdupo.restaurant.domain.User;
+import iw.gdupo.restaurant.dto.UserPaymentRequestDTO;
 import iw.gdupo.restaurant.dto.order.OrderListDTO;
 import iw.gdupo.restaurant.dto.order.OrderRequestDTO;
 import iw.gdupo.restaurant.dto.order.OrderResponseDTO;
@@ -60,5 +61,13 @@ public class OrderService {
 
     public List<Order> getByIds(Set<Long> orderIds) {
         return orderRepository.findAllByIdIn(orderIds);
+    }
+
+    public void payOrder(UserPaymentRequestDTO paymentRequestDTO) {
+        List<Order> orderList = getByIds(paymentRequestDTO.getOrderIds());
+        for (Order order : orderList) {
+            order.setPaid(true);
+        }
+        orderRepository.saveAll(orderList);
     }
 }

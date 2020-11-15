@@ -1,11 +1,11 @@
-package iw.gdupo.restaurant.dto.paymentinfo;
+package iw.gdupo.restaurant.dto;
 
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
-public class UserPaymentInfoRequestDTO {
+public class UserPaymentRequestDTO {
 
     private Set<Long> orderIds;
 }

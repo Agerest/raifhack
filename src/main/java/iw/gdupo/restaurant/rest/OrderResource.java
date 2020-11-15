@@ -1,6 +1,7 @@
 package iw.gdupo.restaurant.rest;
 
 import iw.gdupo.restaurant.domain.User;
+import iw.gdupo.restaurant.dto.UserPaymentRequestDTO;
 import iw.gdupo.restaurant.dto.order.OrderListDTO;
 import iw.gdupo.restaurant.dto.order.OrderRequestDTO;
 import iw.gdupo.restaurant.dto.order.OrderResponseDTO;
@@ -46,5 +47,10 @@ public class OrderResource {
     @GetMapping("/list")
     public List<OrderResponseDTO> getOrderList() {
         return orderService.getOrderList();
+    }
+
+    @PostMapping("/pay")
+    public void payOrder(@RequestBody UserPaymentRequestDTO paymentRequestDTO) {
+        orderService.payOrder(paymentRequestDTO);
     }
 }

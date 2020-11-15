@@ -1,6 +1,6 @@
 package iw.gdupo.restaurant.rest;
 
-import iw.gdupo.restaurant.dto.paymentinfo.UserPaymentInfoResponseDTO;
+import iw.gdupo.restaurant.dto.UserPaymentInfoDTO;
 import iw.gdupo.restaurant.dto.user.UserRequestDTO;
 import iw.gdupo.restaurant.dto.user.UserResponseDTO;
 import iw.gdupo.restaurant.service.UserService;
@@ -38,7 +38,7 @@ public class UserResource {
     }
 
     @GetMapping("/get/payment-info")
-    public UserPaymentInfoResponseDTO getUserPaymentInfo(@CookieValue(value = "data", required = false) Cookie cookie) {
+    public UserPaymentInfoDTO getUserPaymentInfo(@CookieValue(value = "data", required = false) Cookie cookie) {
         return userService.getPaymentInfo(cookie);
     }
 }

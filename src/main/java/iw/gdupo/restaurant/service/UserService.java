@@ -9,6 +9,7 @@ import iw.gdupo.restaurant.dto.user.UserResponseDTO;
 import iw.gdupo.restaurant.mapper.OrderMapper;
 import iw.gdupo.restaurant.mapper.UserJsonMapper;
 import iw.gdupo.restaurant.mapper.UserMapper;
+import iw.gdupo.restaurant.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class UserService {
     private final OrderService orderService;
     private final PaymentInfoService paymentInfoService;
     private final OrderMapper orderMapper;
+    private final UserRepository userRepository;
 
     public UserResponseDTO getUserResponseFromCookie(Cookie data) {
         User user = getUserFromCookie(data);
@@ -57,7 +59,7 @@ public class UserService {
         cookie.setMaxAge(3600);
         cookie.setPath("/");
         response.addCookie(cookie);
-        return user.getId();
+        return userRepository.save(user).getId();
     }
 
     public boolean isAuthenticated(Cookie data) {

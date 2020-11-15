@@ -37,15 +37,15 @@ const Order = (props) => {
                 setTotalOrder(totalOrderJson);
                 console.log("load => totalOrderJson", totalOrderJson);
 
-                // let unpaidOrderJson = await unpaidOrderResponse.json();
-                let unpaidOrderJson = {
-                    orders: [{
-                        id: 0,
-                        name: 'dsadsda',
-                        price: 988,
-                    }],
-                    totalPrice: 988
-                }
+                let unpaidOrderJson = await unpaidOrderResponse.json();
+                // let unpaidOrderJson = {
+                //     orders: [{
+                //         id: 0,
+                //         name: 'dsadsda',
+                //         price: 988,
+                //     }],
+                //     totalPrice: 988
+                // }
                 setUnpaidOrder(unpaidOrderJson);
                 console.log("load => unpaidOrderJson", unpaidOrderJson);
 
@@ -98,7 +98,7 @@ const Order = (props) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ ordersId: ordersId })
+            body: JSON.stringify({ orderIds: ordersId })
         });
     }
 

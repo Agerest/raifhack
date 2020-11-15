@@ -26,6 +26,7 @@ const Order = (props) => {
     const [isChecked, setIsChecked] = useState([]);
 
     const [price, setPrice] = useState(0);
+    const [payementOrders, setPayementOrders] = useState([]);
     const [totalOrder, setTotalOrder] = useState([]);
     const [unpaidOrder, setUnpaidOrder] = useState({ orders: [], totalPrice: 0 });
 
@@ -81,7 +82,18 @@ const Order = (props) => {
                 url: 'https://test.ecom.raiffeisen.ru/pay'
             });
 
-            paymentPage.openWindow({ amount: price });
+            paymentPage.openPopup({ amount: price })
+                .then(success => {
+                    fetch(url + "/api/order/pay", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            orderIds: payementOrders
+                        })
+                    })
+                });
         }
     }
 
@@ -90,8 +102,10 @@ const Order = (props) => {
 
         if (getPaymentInfoResp.ok) {
             let getPaymentInfoJson = await getPaymentInfoResp.json();
-
             setPrice(getPaymentInfoJson.totalSum);
+
+            let orders = getPaymentInfoJson.orders.map(x => x.id);
+            setPayementOrders(orders);
         }
     }
 

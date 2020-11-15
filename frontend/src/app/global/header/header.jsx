@@ -66,9 +66,14 @@ const Header = (props) => {
         <>
             <Container className="p-0 m-0 headerColour" fluid>
                 <Navbar dark={isDark} color={headerColor} light expand="md">
+                    {props.styles.imageUrl ?
+                        <img className="mr-3" width="50" height="50" src={props.styles.imageUrl} />
+                        : ""}
                     <NavbarBrand href="/">{props.styles.restaurantName}</NavbarBrand>
                     <Collapse navbar>
                         <Nav className="mr-auto" navbar>
+                            <NavItem>
+                            </NavItem>
                             <NavItem color="primary">
                                 <NavLink href="#" active={activeItem == pageNames.table} onClick={toTable}>Стол</NavLink>
                             </NavItem>

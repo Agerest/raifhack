@@ -7,6 +7,7 @@ const Settings = (props) => {
     const url = WebApiUrl;
     const settings = useSettings();
 
+    const [urlLogo, setUrlLogo] = useState(props.styles.imageUrl);
     const [name, setName] = useState(props.styles.restaurantName);
     const [headerColor, setHeaderColor] = useState(props.styles.headColour);
     const [headButtonsColour, setHeadButtonsColour] = useState(props.styles.headButtonsColour);
@@ -21,7 +22,8 @@ const Settings = (props) => {
             headButtonsColour: headButtonsColour,
             orderButtonColour: orderButtonColour,
             detailButtonColour: detailButtonColour,
-            payButtonColour: payButtonColour
+            payButtonColour: payButtonColour,
+            imageUrl: urlLogo
         }).then(() => window.location.href = "/")
     }
 
@@ -32,6 +34,13 @@ const Settings = (props) => {
                     <CardTitle tag="h4">Настройки</CardTitle>
                 </CardHeader>
                 <CardBody>
+                    <InputGroup>
+                        <InputGroupAddon addonType="prepend">
+                            <InputGroupText>Логотип</InputGroupText>
+                        </InputGroupAddon>
+                        <Input placeholder="Введите ссылку на логотип" value={urlLogo} onInput={e => setUrlLogo(e.target.value)} />
+                    </InputGroup>
+                    <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Название ресторана</InputGroupText>

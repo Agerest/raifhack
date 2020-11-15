@@ -19,6 +19,7 @@ const Auth = (info = { isOpen: false, setIsOpen: () => { } }) => {
             })
         });
         info.setIsOpen(false);
+        window.location.href = "/";
     }
 
     return (

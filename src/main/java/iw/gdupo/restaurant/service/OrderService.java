@@ -10,6 +10,7 @@ import iw.gdupo.restaurant.mapper.OrderMapper;
 import iw.gdupo.restaurant.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,6 +32,7 @@ public class OrderService {
         return orderMapper.toDtoList(orderRepository.findAll());
     }
 
+    @Transactional
     public Long createOrder(User user, OrderRequestDTO orderDTO) {
         Menu menu = menuService.getMenu(orderDTO.getMenuId());
         Order order = new Order();

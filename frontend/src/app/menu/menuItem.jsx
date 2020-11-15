@@ -11,6 +11,9 @@ import Auth from '../global/auth/auth';
 const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", weight: 0, price: 0, styles: {} }) => {
     const url = WebApiUrl;
 
+    const orderButtonColour = itemInfo.styles.orderButtonColour ? itemInfo.styles.orderButtonColour : "primary";
+    const detailButtonColour = itemInfo.styles.detailButtonColour ? itemInfo.styles.detailButtonColour : "primary";
+
     const [authIsOpen, setAuthIsOpen] = useState(false);
     // const [detailsIsOpen, setDetailsIsOpen] = useState(false);
     // const [details, setDetails] = useState({
@@ -58,9 +61,10 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
                         <CardText>Цена: {itemInfo.price}</CardText>
                     </CardBody>
                     <CardFooter className="d-flex justify-content-around">
-                        <Button style={{ width: '125px', backgroundColor: itemInfo.styles.orderButtonColour }}
+                        <Button color={orderButtonColour} style={{ width: '125px' }}
+                            color="primary"
                             onClick={order}>Заказать</Button>
-                        <Button style={{ width: '125px', backgroundColor: itemInfo.styles.detailButtonColour }}
+                        <Button color={detailButtonColour} style={{ width: '125px' }}
                             onClick={showDetails}>Подробнее</Button>
                     </CardFooter>
                 </Card>

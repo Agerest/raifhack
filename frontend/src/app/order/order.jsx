@@ -6,6 +6,8 @@ import { WebApiUrl } from "../../config";
 const Order = (props) => {
     const url = WebApiUrl;
 
+    const payButtonColour = props.styles.payButtonColour ? props.styles.payButtonColour : "primary";
+
     const [price, setPrice] = useState(0);
     const [totalOrder, setTotalOrder] = useState([]);
     const [unpaidOrder, setUnpaidOrder] = useState({ orders: [], totalPrice: 0 });
@@ -88,7 +90,7 @@ const Order = (props) => {
                             {price ?
                                 <>
                                     <h5>Сумма к оплате: {price}</h5>
-                                    <Button className="payButtonColour" color="warning" onClick={pay}>Оплатить</Button>
+                                    <Button color={payButtonColour} onClick={pay}>Оплатить</Button>
                                 </>
                                 : ""}
                         </Card>

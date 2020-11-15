@@ -7,15 +7,6 @@ import TableItem from './tableItem';
 const Table = (props) => {
     const url = WebApiUrl;
 
-    const settings = useSettings();
-
-    useEffect(() => {
-        const load = async () => {
-            await settings.get();
-        }
-        load();
-    })
-
     const [tableItems, setTableItems] = useState([]);
 
     useEffect(() => {

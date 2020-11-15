@@ -15,6 +15,9 @@ const Header = (props) => {
         text: ""
     });
 
+    const headerColor = props.styles.headColour ? props.styles.headColour : "light";
+    const isDark = headerColor == "dark";
+
     useEffect(() => {
         const init = () => {
             switch (history.location) {
@@ -62,11 +65,11 @@ const Header = (props) => {
     return (
         <>
             <Container className="p-0 m-0 headerColour" fluid>
-                <Navbar style={{ backgroundColor: props.styles.headColour }} light expand="md">
+                <Navbar dark={isDark} color={headerColor} light expand="md">
                     <NavbarBrand href="/">{props.styles.restaurantName}</NavbarBrand>
                     <Collapse navbar>
                         <Nav className="mr-auto" navbar>
-                            <NavItem style={{ backgroundColor: props.styles.headButtonsColour }}>
+                            <NavItem color="primary">
                                 <NavLink href="#" active={activeItem == pageNames.table} onClick={toTable}>Стол</NavLink>
                             </NavItem>
                             <NavItem style={{ backgroundColor: props.styles.headButtonsColour }}>

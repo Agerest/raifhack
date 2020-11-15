@@ -43,35 +43,52 @@ const Settings = (props) => {
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет шапки</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Введите название цвета или его HEX код" value={headerColor} onInput={e => setHeaderColor(e.target.value)} />
-                    </InputGroup>
-                    <br />
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                            <InputGroupText>Цвет кнопок в шапке</InputGroupText>
-                        </InputGroupAddon>
-                        <Input placeholder="Введите название цвета или его HEX код" value={headButtonsColour} onInput={e => setHeadButtonsColour(e.target.value)} />
+                        <Input type="select" value={headerColor} name="headColour" onInput={e => setHeaderColor(e.target.value)}>
+                            <option>dark</option>
+                            <option>primary</option>
+                            <option>light</option>
+                        </Input>
                     </InputGroup>
                     <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет кнопки "Заказать" в меню</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Введите название цвета или его HEX код" value={orderButtonColour} onInput={e => setOrderButtonColour(e.target.value)} />
+                        <Input type="select" value={orderButtonColour} onInput={e => setOrderButtonColour(e.target.value)}>
+                            <option>primary</option>
+                            <option>secondary</option>
+                            <option>success</option>
+                            <option>info</option>
+                            <option>warning</option>
+                            <option>danger</option>
+                        </Input>
                     </InputGroup>
                     <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет кнопки "Подробнее" в меню</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Введите название цвета или его HEX код" value={detailButtonColour} onInput={e => setDetailButtonColour(e.target.value)} />
+                        <Input type="select" value={detailButtonColour} onInput={e => setDetailButtonColour(e.target.value)}>
+                            <option>primary</option>
+                            <option>secondary</option>
+                            <option>success</option>
+                            <option>info</option>
+                            <option>warning</option>
+                            <option>danger</option>
+                        </Input>
                     </InputGroup>
                     <br />
                     <InputGroup>
                         <InputGroupAddon addonType="prepend">
                             <InputGroupText>Цвет кнопки "Оплатить" в заказе</InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Введите название цвета или его HEX код" value={payButtonColour} onInput={e => setPayButtonColour(e.target.value)} />
+                        <Input type="select" value={payButtonColour} onInput={e => setPayButtonColour(e.target.value)} >
+                            <option>secondary</option>
+                            <option>success</option>
+                            <option>info</option>
+                            <option>warning</option>
+                            <option>danger</option>
+                        </Input>
                     </InputGroup>
                 </CardBody>
                 <CardFooter>

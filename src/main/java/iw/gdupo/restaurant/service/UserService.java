@@ -12,6 +12,7 @@ import iw.gdupo.restaurant.mapper.UserMapper;
 import iw.gdupo.restaurant.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -53,13 +54,14 @@ public class UserService {
         return userJsonMapper.toObject(data.getValue());
     }
 
+    @Transactional
     public Long registerNewUser(HttpServletResponse response, UserRequestDTO userRequestDTO) {
-        User user = userMapper.toEntity(userRequestDTO);
+        User user = userRepository.save(userMapper.toEntity(userRequestDTO));
         Cookie cookie = new Cookie(DATA_ID, userJsonMapper.toJson(user));
         cookie.setMaxAge(3600);
         cookie.setPath("/");
         response.addCookie(cookie);
-        return userRepository.save(user).getId();
+        return user.getId();
     }
 
     public boolean isAuthenticated(Cookie data) {

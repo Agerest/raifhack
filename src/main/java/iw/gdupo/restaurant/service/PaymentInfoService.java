@@ -7,6 +7,7 @@ import iw.gdupo.restaurant.dto.paymentinfo.UserPaymentInfoRequestDTO;
 import iw.gdupo.restaurant.repository.PaymentInfoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ public class PaymentInfoService {
     private final PaymentInfoRepository paymentInfoRepository;
     private final OrderService orderService;
 
+    @Transactional
     public void savePaymentInfos(UserPaymentInfoRequestDTO paymentInfoRequestDTO, User user) {
         List<Order> orders = orderService.getByIds(paymentInfoRequestDTO.getOrderIds());
         List<PaymentInfo> paymentInfoList = orders.stream().map(order -> {

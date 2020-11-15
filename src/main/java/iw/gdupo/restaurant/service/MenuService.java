@@ -6,6 +6,7 @@ import iw.gdupo.restaurant.mapper.MenuMapper;
 import iw.gdupo.restaurant.repository.MenuRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class MenuService {
         return menuMapper.toDto(menuRepository.findAll());
     }
 
+    @Transactional
     public Long addNewMenu(MenuDTO menuDTO) {
         return menuRepository.save(menuMapper.toEntity(menuDTO)).getId();
     }

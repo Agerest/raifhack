@@ -72,11 +72,9 @@ const Header = (props) => {
                     <NavbarBrand href="/">{props.styles.restaurantName}</NavbarBrand>
                     <Collapse navbar>
                         <Nav className="mr-auto" navbar>
-                            <NavItem>
-                            </NavItem>
-                            <NavItem color="primary">
+                            {/* <NavItem color="primary">
                                 <NavLink href="#" active={activeItem == pageNames.table} onClick={toTable}>Стол</NavLink>
-                            </NavItem>
+                            </NavItem> */}
                             <NavItem style={{ backgroundColor: props.styles.headButtonsColour }}>
                                 <NavLink href="#" active={activeItem == pageNames.menu} onClick={toMenu}>Меню</NavLink>
                             </NavItem>

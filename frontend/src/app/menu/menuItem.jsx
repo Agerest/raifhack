@@ -32,7 +32,9 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ menuId: itemInfo.id })
+                body: JSON.stringify({ 
+                    tableId: 0,
+                    menuId: itemInfo.id })
             })
         }
         else {

@@ -22,7 +22,7 @@ public class PaymentInfoService {
     @Transactional
     public void savePaymentInfos(UserPaymentRequestDTO paymentInfoRequestDTO, User user) {
         List<Order> orders = orderService.getByIds(paymentInfoRequestDTO.getOrderIds());
-        paymentInfoRepository.removeAllByOrderIn(orders);
+        removeAllUserPayment(user);
         List<PaymentInfo> paymentInfoList = orders.stream().map(order -> {
             PaymentInfo paymentInfo = new PaymentInfo();
             paymentInfo.setOrder(order);
@@ -30,6 +30,18 @@ public class PaymentInfoService {
             return paymentInfo;
         }).collect(Collectors.toList());
         paymentInfoRepository.saveAll(paymentInfoList);
+    }
+
+    private void removeAllUserPayment(User user) {
+        List<PaymentInfo> paymentInfoList = findPaymentInfoList(user);
+        for (PaymentInfo paymentInfo : paymentInfoList) {
+            if (paymentInfo.getUsers().size() == 1) {
+                paymentInfoRepository.delete(paymentInfo);
+            } else {
+                paymentInfo.getUsers().remove(user);
+                paymentInfoRepository.save(paymentInfo);
+            }
+        }
     }
 
     public List<PaymentInfo> findPaymentInfoList(User user) {

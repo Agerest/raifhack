@@ -49,11 +49,11 @@ const Order = (props) => {
                 setUnpaidOrder(unpaidOrderJson);
                 console.log("load => unpaidOrderJson", unpaidOrderJson);
 
-                let checked = [];
+                // await getPaymentInfo();
 
-                for (let i = 0; i < unpaidOrderJson.orders.length; i++) {
-                    checked.push({ orderId: i, isCheck: false });
-                }
+                let checked = unpaidOrderJson.orders.map(x => {
+                    return { orderId: x.id, isCheck: false }
+                });
 
                 setIsChecked(checked);
                 console.log("load => checked", checked);
@@ -65,6 +65,7 @@ const Order = (props) => {
     const onCheck = (orderId) => {
         isChecked.filter(x => x.orderId == orderId)[0].isCheck = !isChecked.filter(x => x.orderId == orderId)[0].isCheck;
         setIsChecked(isChecked);
+        console.log("onCheck => isChecked", isChecked);
     }
 
     const pay = async () => {
@@ -118,34 +119,38 @@ const Order = (props) => {
                         </CardBody>
                     </Card>
                     <br />
-                    <Card>
-                        <CardBody>
-                            <Button color="primary" onClick={savePaymentInfo}>Сохранить</Button>
-                            <Button color="primary" onClick={getPaymentInfo}>Обновить</Button>
-                        </CardBody>
-                    </Card>
-                    <br />
-                    {unpaidOrder.orders.length ? <Card>
-                        <CardHeader>
-                            <h3>Неоплаченные позиции</h3>
-                        </CardHeader>
-                        <CardBody>
-                            {unpaidOrder.orders.map((item, index) =>
-                                <InputGroup key={index}>
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            <Input addon
-                                                type="checkbox"
-                                                checked={isChecked.filter(x => x.orderId == index).isCheck}
-                                                onChange={() => onCheck(index)}
-                                            />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input disabled placeholder={item.name} />
-                                </InputGroup>
-                            )}
-                        </CardBody>
-                    </Card> : ""}
+                    {unpaidOrder.orders.length ? <>
+                        <Card>
+                            <CardBody>
+                                <Button color="primary" onClick={savePaymentInfo}>Сохранить</Button>
+                                <Button className="ml-3" color="primary" onClick={getPaymentInfo}>Обновить</Button>
+                            </CardBody>
+                        </Card>
+                        <br />
+                        <Card>
+                            <CardHeader>
+                                <h3>Неоплаченные позиции</h3>
+                            </CardHeader>
+                            <CardBody>
+                                {unpaidOrder.orders.map((item, index) =>
+                                    <InputGroup key={index}>
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText>
+                                                <Input addon
+                                                    type="checkbox"
+                                                    checked={isChecked.filter(x => x.orderId == item.id).isCheck}
+                                                    onChange={() => onCheck(item.id)}
+                                                />
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input disabled placeholder={`${item.name} | ${item.price} р`} />
+                                    </InputGroup>
+                                )}
+                            </CardBody>
+                        </Card>
+                    </> : <Card body>
+                            <CardText>Сейчас тут ничего нет, так как вы ничего не заказали</CardText>
+                        </Card>}
 
                 </Col>
                 {/* Оплатить */}

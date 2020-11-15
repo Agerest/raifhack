@@ -38,6 +38,7 @@ public class OrderService {
         Order order = new Order();
         order.setMenu(menu);
         order.setUser(user);
+        order.setTableId(orderDTO.getTableId());
         return orderRepository.save(order).getId();
     }
 

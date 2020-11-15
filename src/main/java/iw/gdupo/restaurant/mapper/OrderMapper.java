@@ -5,6 +5,8 @@ import iw.gdupo.restaurant.domain.User;
 import iw.gdupo.restaurant.dto.order.OrderResponseDTO;
 import iw.gdupo.restaurant.dto.user.UserShortResponseDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,5 +18,9 @@ public interface OrderMapper {
 
     List<OrderResponseDTO> toDtoList(Collection<Order> entities);
 
-    OrderResponseDTO toDto(Order entities);
+    @Mappings({
+            @Mapping(target = "price", source = "entity.menu.price"),
+            @Mapping(target = "name", source = "entity.menu.name")
+    })
+    OrderResponseDTO toDto(Order entity);
 }

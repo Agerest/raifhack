@@ -1,16 +1,31 @@
-import { Container, Row, Col, Card, Button, CardHeader, CardTitle, InputGroup, InputGroupAddon, InputGroupText, Input, CardText, CardBody } from "reactstrap";
+import {
+    Button,
+    Card,
+    CardBody,
+    CardHeader,
+    CardText,
+    Col,
+    Container,
+    Input,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupText,
+    Row
+} from "reactstrap";
 import PaymentPageSdk from '@raiffeisen-ecom/payment-sdk';
-import { useEffect, useState } from "react";
-import { WebApiUrl } from "../../config";
+import {useEffect, useState} from "react";
+import {WebApiUrl} from "../../config";
 
 const Order = (props) => {
     const url = WebApiUrl;
 
     const payButtonColour = props.styles.payButtonColour ? props.styles.payButtonColour : "primary";
 
+    const [isChecked, setIsChecked] = useState([]);
+
     const [price, setPrice] = useState(0);
     const [totalOrder, setTotalOrder] = useState([]);
-    const [unpaidOrder, setUnpaidOrder] = useState({ orders: [], totalPrice: 0 });
+    const [unpaidOrder, setUnpaidOrder] = useState({orders: [], totalPrice: 0});
 
     useEffect(() => {
         const load = async () => {
@@ -19,14 +34,30 @@ const Order = (props) => {
 
             if (totalOrderResp.ok && unpaidOrderResponse.ok) {
                 let totalOrderJson = await totalOrderResp.json();
-                if (totalOrderJson.length) setTotalOrder(totalOrderJson);
+                setTotalOrder(totalOrderJson);
+                console.log("load => totalOrderJson", totalOrderJson);
 
                 let unpaidOrderJson = await unpaidOrderResponse.json();
-                if (unpaidOrderJson.length) setUnpaidOrder(unpaidOrderJson);
+                setUnpaidOrder(unpaidOrderJson);
+                console.log("load => unpaidOrderJson", unpaidOrderJson);
+
+                let checked = unpaidOrder.orders.map(item => {
+                    return new {orderId: item.id, isCheck: false};
+                })
+
+                setIsChecked(checked);
+                console.log("load => isChecked", isChecked);
             }
         }
         load();
     }, []);
+
+    const onCheck = (orderId) => {
+        let isCheck = isChecked.filter(x => x.orderId == orderId).isCheck;
+        isCheck = !isCheck;
+        setIsChecked(isChecked);
+        console.log("onCheck => isChecked", isChecked);
+    }
 
 
     const pay = async () => {
@@ -67,7 +98,10 @@ const Order = (props) => {
                                 <InputGroup key={index}>
                                     <InputGroupAddon addonType="prepend">
                                         <InputGroupText>
-                                            <Input checked disabled addon type="checkbox" />
+                                            <Input addon
+                                                   type="checkbox"
+                                                   checked={isChecked.filter(x => x.orderId == index).isCheck}
+                                                   onCheck={() => onCheck(index)}/>
                                         </InputGroupText>
                                     </InputGroupAddon>
                                     <Input disabled placeholder={item.name} />
@@ -81,9 +115,6 @@ const Order = (props) => {
                 <Col lg='4' className="align-self-start">
                     {totalOrder.length || unpaidOrder.totalPrice || price ?
                         <Card body>
-                            {totalOrder.length ?
-                                <h5>Сумма заказа: {totalOrder.reduce((prev, next) => prev.price + next.price)}</h5>
-                                : ""}
                             {unpaidOrder.totalPrice ?
                                 <h5>Осталось к оплате: {unpaidOrder.totalPrice}</h5>
                                 : ""}

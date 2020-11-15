@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-import {
-    Col, Card,
-    CardHeader, CardBody, CardText, CardFooter,
-    Button, CardImg,
-    CardTitle
-} from 'reactstrap';
-import { WebApiUrl } from '../../config';
+import React, {useState} from 'react';
+import {Button, Card, CardBody, CardFooter, CardHeader, CardImg, CardText, CardTitle, Col} from 'reactstrap';
+import {WebApiUrl} from '../../config';
 import Auth from '../global/auth/auth';
 
-const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", weight: 0, price: 0, styles: {} }) => {
+const MenuItem = (itemInfo = {id: 0, name: "", shortImg: "", description: "", weight: 0, price: 0, styles: {}}) => {
     const url = WebApiUrl;
 
     const orderButtonColour = itemInfo.styles.orderButtonColour ? itemInfo.styles.orderButtonColour : "primary";
@@ -32,7 +27,10 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ menuId: itemInfo.id })
+                body: JSON.stringify({
+                    tableId: 0,
+                    menuId: itemInfo.id
+                })
             })
         }
         else {

@@ -1,7 +1,7 @@
 package iw.gdupo.restaurant.rest;
 
 import iw.gdupo.restaurant.domain.User;
-import iw.gdupo.restaurant.dto.paymentinfo.UserPaymentInfoRequestDTO;
+import iw.gdupo.restaurant.dto.UserPaymentRequestDTO;
 import iw.gdupo.restaurant.service.PaymentInfoService;
 import iw.gdupo.restaurant.service.UserService;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ public class PaymentInfoResource {
 
     @PostMapping("/new")
     public void savePaymentInfos(@CookieValue(value = "data", required = false) Cookie cookie,
-                                 @RequestBody UserPaymentInfoRequestDTO paymentInfoRequestDTO) {
+                                 @RequestBody UserPaymentRequestDTO paymentInfoRequestDTO) {
         User user = userService.getUserFromCookie(cookie);
         paymentInfoService.savePaymentInfos(paymentInfoRequestDTO, user);
     }

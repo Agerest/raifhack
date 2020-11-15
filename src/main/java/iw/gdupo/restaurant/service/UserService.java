@@ -2,8 +2,8 @@ package iw.gdupo.restaurant.service;
 
 import iw.gdupo.restaurant.domain.PaymentInfo;
 import iw.gdupo.restaurant.domain.User;
+import iw.gdupo.restaurant.dto.UserPaymentInfoDTO;
 import iw.gdupo.restaurant.dto.order.OrderResponseDTO;
-import iw.gdupo.restaurant.dto.paymentinfo.UserPaymentInfoResponseDTO;
 import iw.gdupo.restaurant.dto.user.UserRequestDTO;
 import iw.gdupo.restaurant.dto.user.UserResponseDTO;
 import iw.gdupo.restaurant.mapper.OrderMapper;
@@ -38,7 +38,7 @@ public class UserService {
         if (user == null) {
             return null;
         }
-        UserResponseDTO userResponseDTO = userMapper.toResponseDTO(null);
+        UserResponseDTO userResponseDTO = userMapper.toResponseDTO(user);
         List<OrderResponseDTO> orderList = orderService.getOrderListByUserId(userResponseDTO.getId());
         userResponseDTO.setOrders(orderList);
         userResponseDTO.setTotalPrice(orderList.stream()
@@ -68,13 +68,18 @@ public class UserService {
         return data != null && !data.getValue().isEmpty();
     }
 
-    public UserPaymentInfoResponseDTO getPaymentInfo(Cookie cookie) {
+    public UserPaymentInfoDTO getPaymentInfo(Cookie cookie) {
         User user = getUserFromCookie(cookie);
         List<PaymentInfo> paymentInfoList = paymentInfoService.findPaymentInfoList(user);
-        UserPaymentInfoResponseDTO paymentInfoResponseDTO = new UserPaymentInfoResponseDTO();
+        UserPaymentInfoDTO paymentInfoResponseDTO = new UserPaymentInfoDTO();
         paymentInfoResponseDTO.setPayer(userMapper.toShortResponseDTO(user));
         List<OrderResponseDTO> orders = paymentInfoList.stream()
-                .map(paymentInfo -> orderMapper.toDto(paymentInfo.getOrder()))
+                .map(paymentInfo -> {
+                    OrderResponseDTO orderResponseDTO = orderMapper.toDto(paymentInfo.getOrder());
+                    int usersSize = paymentInfo.getUsers().size();
+                    orderResponseDTO.setPrice(orderResponseDTO.getPrice().divide(BigDecimal.valueOf(usersSize)));
+                    return orderResponseDTO;
+                })
                 .collect(Collectors.toList());
         paymentInfoResponseDTO.setOrders(orders);
         paymentInfoResponseDTO.setTotalSum(orders.stream()

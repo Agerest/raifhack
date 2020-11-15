@@ -10,6 +10,9 @@ const Auth = (info = { isOpen: false, setIsOpen: () => { } }) => {
     const auth = async () => {
         await fetch(url + "/api/user/new", {
             method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 nickname: authName,
                 tableId: 0

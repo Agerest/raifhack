@@ -29,6 +29,9 @@ const MenuItem = (itemInfo = { id: 0, name: "", shortImg: "", description: "", w
         if (isAuthJson) {
             fetch(url + "/api/order/new", {
                 method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({ menuId: itemInfo.id })
             })
         }

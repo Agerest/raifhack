@@ -82,18 +82,18 @@ const Order = (props) => {
                 url: 'https://test.ecom.raiffeisen.ru/pay'
             });
 
-            paymentPage.openPopup({ amount: price })
-                .then(success => {
-                    fetch(url + "/api/order/pay", {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            orderIds: payementOrders
-                        })
-                    })
-                });
+            paymentPage.openWindow({ amount: price });
+                // .then(success => {
+                //     fetch(url + "/api/order/pay", {
+                //         method: "POST",
+                //         headers: {
+                //             'Content-Type': 'application/json'
+                //         },
+                //         body: JSON.stringify({
+                //             orderIds: payementOrders
+                //         })
+                //     })
+                // });
         }
     }
 
